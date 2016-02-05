@@ -1,0 +1,10 @@
+<%@ MasterClass="Application.layouts.EmptyLayout" %>
+<com:TContent ID="Cabecera">
+	<com:TClientScript>
+		window.print();
+		window.close();
+	</com:TClientScript>
+</com:TContent>
+<com:TContent ID="Main">
+<com:TLabel ID="lblTitulo" Text="DIRECCION DE PENSIONES" Font.Size="16px" Font.Bold="true"/>
+</com:TContent>

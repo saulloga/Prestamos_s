@@ -1,0 +1,239 @@
+<%@ MasterClass="Application.layouts.MainLayout" Title="Captura de solicitudes" %>
+<com:TContent ID="Cabeceras">
+	<com:TClientScript ID="cscr" ScriptUrl="../compartidos/js/comun.js" />
+	<com:TStyleSheet ID="stylshtgrid" StyleSheetUrl="../compartidos/css/grids.css" />
+	<com:TStyleSheet ID="stylshtest" StyleSheetUrl="../compartidos/css/estilos.css" />
+	<com:TClientScript ID="cscrPrompt">
+		function busca(event, sufijo)
+		{
+			num = event.keyCode;
+
+			if(num == 114)
+			{
+				event.preventDefault();
+				abrir(sufijo);
+			}
+			else if(num != 9 && num != 13)
+			{
+				limpia_campos(sufijo);
+			}
+		}
+		
+		function abrir(sufijo)
+		{
+			open('index.php?page=busca_empleado&sufijo=' + sufijo, '_blank');
+		}
+		
+		function limpia_campos(sufijo)
+		{
+			opener.document.getElementById('ctl0_Main_txtAntiguedad' + sufijo).value = '';
+			opener.document.getElementById('ctl0_Main_txtNombre' + sufijo).value = '';
+			opener.document.getElementById('ctl0_Main_txtSindicato' + sufijo).value = '';
+			opener.document.getElementById('ctl0_Main_txtTipo' + sufijo).value = '';
+			opener.document.getElementById('ctl0_Main_hidImporte' + sufijo).value = '';
+			opener.document.getElementById('ctl0_Main_hidPorcentaje' + sufijo).value = '';	
+			opener.document.getElementById('ctl0_Main_txtSindicatoNum' + sufijo).value = '';
+			opener.document.getElementById('ctl0_Main_txtTipoNum' + sufijo).value = '';
+		}
+		
+	</com:TClientScript>
+</com:TContent>
+<com:TContent ID="Main">
+	<!--Datos del solicitante-->
+	<table width="100%" border="1">
+
+		<!--Título-->
+		<tr>
+			<td colspan="2" align="center" width="100%">
+				<p class="titulo">Solicitudes</p>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<table width="100%" border="1">
+					<tr>
+						<td>Titular:</td>
+						<td colspan="5"><com:TTextBox ID="txtTitular" Attributes.onchange="advertencia(this.value)" />
+						<com:TTextBox ID="txtPrueba" Attributes.onchange="advertencia(this.value)" Visible="false"/></td>
+					</tr>
+
+					<tr>
+						<td>Folio:</td>
+						<td><com:TTextBox ID="txtFolio" BackColor="white"/></td>
+						<td>Fecha:</td>
+						<td><com:TTextBox ID="txtFecha" ReadOnly="True" /></td>
+						<td>Estatus</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<com:TPanel GroupingText="Titular">
+								<table width="100%" border="1">
+									<tr>
+										<td>No. Único</td>
+										<td>
+											<com:TActiveTextBox ID="txtNoUnicoTit" Width="80px" OnCallback="txtNoUnico_CallBack" AutoPostBack="True" 
+													Attributes.onkeydown="busca(event, 'Tit')" Attributes.onchange="advertencia(this.value)" />
+											<a href="#" onclick="abrir('Tit')">Buscar</a>
+										</td>
+										<td>Antigüedad</td>
+										<td><com:TActiveTextBox ID="txtAntiguedadTit" Width="200px" ReadOnly="True" /></td>
+									</tr>
+									<tr>
+										<td>Nombre</td>
+										<td colspan="3"><com:TActiveTextBox ID="txtNombreTit" Width="400px" ReadOnly="True" /></td>
+									</tr>
+									<tr>
+										<td>Tipo</td>
+										<td><com:TActiveTextBox ID="txtTipoTit" Width="100px" ReadOnly="True" />
+										<com:TActiveTextBox ID="txtTipoNumTit" Width="20px" ReadOnly="True" /></td> 
+										<td>Sindicato</td>
+										<td><com:TActiveTextBox ID="txtSindicatoTit" Width="200px" ReadOnly="True" />
+										<com:TActiveTextBox ID="txtSindicatoNumTit" Width="20px" ReadOnly="True" /></td>
+									</tr>
+								</table>
+							</com:TPanel>
+						</td>
+						<td align="center">
+							<com:TImage ID="imgEstatusTit" ImageUrl="images/rojo.png" Visible="False" />
+							<com:THiddenField ID="hidImporteTit" />
+							<com:THiddenField ID="hidPorcentajeTit" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<com:TPanel GroupingText="Aval 1">
+								<table width="100%" border="1">
+									<tr>
+										<td>No. Único</td>
+										<td>
+											<com:TActiveTextBox ID="txtNoUnicoAval1" Width="80px" OnCallback="txtNoUnico_CallBack" AutoPostBack="True" 
+													Attributes.onkeydown="busca(event, 'Aval1')" Attributes.onchange="advertencia(this.value)" />
+											<a href="#" onclick="abrir('Aval1')">Buscar</a>
+										</td>
+										<td>Antigüedad</td>
+										<td><com:TActiveTextBox ID="txtAntiguedadAval1" Width="200px" ReadOnly="True" /></td>
+									</tr>
+									<tr>
+										<td>Dirección</td>
+										<td colspan="3"><com:TActiveTextBox ID="txtNombreAval1" Width="400px" ReadOnly="True" /></td>
+									</tr>
+									<tr>
+										<td>Tipo</td>
+										<td><com:TActiveTextBox ID="txtTipoAval1" Width="100px" ReadOnly="True" />
+										<com:TActiveTextBox ID="txtTipoNumAval1" Width="20px" ReadOnly="True" /></td>
+										<td>Sindicato</td>
+										<td><com:TActiveTextBox ID="txtSindicatoAval1" Width="200px" ReadOnly="True" />
+										<com:TActiveTextBox ID="txtSindicatoNumAval1" Width="20px" ReadOnly="True" /></td>
+									</tr>
+								</table>
+							</com:TPanel>
+						</td>
+						<td align="center">
+							<com:TImage ID="imgEstatusAval1" ImageUrl="images/rojo.png" Visible="False" />
+							<com:THiddenField ID="hidImporteAval1" />
+							<com:THiddenField ID="hidPorcentajeAval1" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<com:TPanel GroupingText="Aval 2">
+								<table width="100%" border="1">
+									<tr>
+										<td>No. Único</td>
+										<td>
+											<com:TActiveTextBox ID="txtNoUnicoAval2" Width="80px" OnCallback="txtNoUnico_CallBack" AutoPostBack="True" 
+													Attributes.onkeydown="busca(event, 'Aval2')" Attributes.onchange="advertencia(this.value)" />
+											<a href="#" onclick="abrir('Aval2')">Buscar</a>
+										</td>
+										<td>Antigüedad</td>
+										<td><com:TActiveTextBox ID="txtAntiguedadAval2" Width="200px" ReadOnly="True" /></td>
+									</tr>
+									<tr>
+										<td>Dirección</td>
+										<td colspan="3"><com:TActiveTextBox ID="txtNombreAval2" Width="400px" ReadOnly="True" /></td>
+									</tr>
+									<tr>
+										<td>Tipo</td>
+										<td><com:TActiveTextBox ID="txtTipoAval2" Width="100px" ReadOnly="True" />
+										<com:TActiveTextBox ID="txtTipoNumAval2" Width="20px" ReadOnly="True" /></td>
+										<td>Sindicato</td>
+										<td><com:TActiveTextBox ID="txtSindicatoAval2" Width="200px" ReadOnly="True" />
+										<com:TActiveTextBox ID="txtSindicatoNumAval2" Width="20px" ReadOnly="True" /></td>
+									</tr>
+								</table>
+							</com:TPanel>
+						</td>
+						<td align="center">
+							<com:TImage ID="imgEstatusAval2" ImageUrl="images/rojo.png" Visible="False" />
+							<com:THiddenField ID="hidImporteAval2" />
+							<com:THiddenField ID="hidPorcentajeAval2" />
+						</td>
+					</tr>
+					<tr>
+						<td>Fecha Firma Avales</td>
+						<td colspan="5"><com:TDatePicker ID="datFechaFirmaAvales" DateFormat="yyyy-MMMM-dd" Culture="es" InputMode="DropDownList" CausesValidation="false" /></td> 
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table width="100%" border="1">
+					<tr>
+						<td>Importe:</td>
+						<td><com:TTextBox ID="txtImporte" width="80px" Attributes.onchange="advertencia(this.value)" /></td>
+					</tr>
+					<tr>
+						<td>Plazo:</td>
+						<td><com:TTextBox ID="txtPlazo"  width="80px" Attributes.onchange="advertencia(this.value)" /></td>
+					</tr>
+					<tr>
+						<td>Tasa:</td>
+						<td><com:TTextBox ID="txtTasa" width="80px" Attributes.onchange="advertencia(this.value)" /></td>
+					</tr>
+					<tr>
+						<td>Interes:</td>
+						<td><com:TTextBox ID="txtInteres" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Saldo anterior:</td>
+						<td><com:TTextBox ID="txtSaldoAnterior" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Descuentos:</td>
+						<td><com:TTextBox ID="txtDescuentos" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Imp. Descuentos:</td>
+						<td><com:TTextBox ID="txtImpDescuentos" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Imp. Prestamos:</td>
+						<td><com:TTextBox ID="txtImpPrestamos" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Seguro:</td>
+						<td><com:TTextBox ID="txtSeguro" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Diferencia:</td>
+						<td><com:TTextBox ID="txtDiferencia" width="80px" ReadOnly="True" /></td>
+					</tr>
+					<tr>
+						<td>Imp. Cheque:</td>
+						<td><com:TTextBox ID="txtImpCheque" width="80px" ReadOnly="True" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<!--Botón Guardar-->
+		<tr>
+			<td colspan="2" align="center">
+				<com:TButton ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" Attributes.onclick="window.onbeforeunload=''" IsDefaultButton="true" Visible="true"/>
+				<com:TButton ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_onclick" Attributes.onclick="window.onbeforeunload=''" IsDefaultButton="true" Visible="false"/>
+				<com:TButton ID="btnModificar" Text="Actualizar" OnClick="btnModificar_onclick" Attributes.onclick="window.onbeforeunload=''" IsDefaultButton="true" Visible="false"/>
+			</td>
+		</tr>
+	</table>
+	<com:TValidationSummary ShowMessageBox="true" ShowSummary="false" />
+</com:TContent>

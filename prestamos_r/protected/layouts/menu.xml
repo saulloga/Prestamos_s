@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Menu ID="mnuPrincipal">
+	<MenuItem ID="smHome" Title="Inicio" Url="index.php?page=Home" Description="Inicio" />
+	<MenuItem ID="smMovimientos" Title="Movimientos">
+		<MenuItem ID="smMovNvaSol" Title="Nueva Solicitud" Url="index.php?page=solicitudes&amp;opcion=nueva" Description="Captura de solicitud" />
+		<MenuItem ID="smMovEdtSol" Title="Modificar Solicitud" Url="index.php?page=solicitudes&amp;opcion=modificar" Description="Modificar solicitud" />
+		<MenuItem ID="smMovEdtSol" Title="Contratos" Url="index.php?page=contrato" Description="Contratos" />
+		<MenuItem ID="smMovEdtSol" Title="Movimientos" Url="index.php?page=movimientos" Description="Movimientos" />
+		<MenuItem ID="smSolDesno" Title="Archivo de nómina" Url="index.php?page=descuentos" Description="Archivo de nómina" />
+	</MenuItem>
+	<MenuItem ID="smCatalogos" Title="Catálogos">
+		<MenuItem ID="smCatJefes" Title="Modificar datos de jefes" Url="index.php?page=jefes&amp;popup=1" Description="Modificar el nombre del jefe de un área y el nombre de su puesto" Target="_blank" IdPag="jefe" />
+		<MenuItem ID="smCatAreas" Title="Modificar coordinaciones y áreas" Url="index.php?page=areas&amp;popup=1" Description="Administra catálogos de coordinaciones y áreas" Target="_blank" IdPag="area" />
+		<MenuItem ID="smCatProg" Title="Alta de programas" Url="index.php?page=programas&amp;popup=1" Description="Alta de programas" Target="_blank" IdPag="prog" />
+		<MenuItem ID="smCatAsoc" Title="Asociar coordinaciones - programas" Url="index.php?page=coord_prog&amp;popup=1" Description="Asocia un programa con la coordinación que lo proporciona" Target="_blank" IdPag="asoc" />
+		<MenuItem ID="smCatCalles" Title="Agencias, colonias y calles" Url="index.php?page=calles&amp;popup=1" Description="Administra catálogos de agencias, colonias y calles" Target="_blank" IdPag="call" />
+		<MenuItem ID="smCatLogos" Title="Encabezados y pies de página" Url="index.php?page=logos&amp;popup=1" Description="Guarda encabezados y pies de página" Target="_blank" IdPag="logo" />
+	</MenuItem>
+	<MenuItem ID="smDocumentos" Title="Documentos">
+		<MenuItem ID="smOficCan" Title="Oficio de canalización" Url="index.php?page=oficio_can_pendiente" Description="Generar oficio de canalización de solicitud" IdPag="canl" />
+		<MenuItem ID="smOficRep" Title="Reportes" Url="index.php?page=reportes" Description="Generación de reportes" IdPag="repo" />
+		<MenuItem ID="smOficConc" Title="Concentrados" Url="index.php?page=concentrados" Description="Generación de concentrados" IdPag="conc" />
+	</MenuItem>
+	<MenuItem ID="smUsuario" Title="Usuario">
+		<MenuItem ID="smAdmNvousr" Title="Datos del usuario" Url="index.php?page=usrs" Description="Administrar datos personales" IdPag="eusr" />
+		<MenuItem ID="smUsrAcc" Title="Cambiar password" Url="index.php?page=Usuarios.cambiapass" Description="Cambiar la contraseña del usuario" />
+	</MenuItem>
+	<MenuItem ID="smAdmin" Title="Administración">
+		<MenuItem ID="smAdmNvousr" Title="Administración de usuarios" Url="index.php?page=usrs" Description="Crear nuevos usuarios y administrar los existentes" IdPag="nusr" />
+		<MenuItem ID="smAdmPermAreas" Title="Asignar permisos de áreas" Url="index.php?page=asigna_areas" Description="Asignar permisos de áreas para dar respuestas" IdPag="pare" />
+		<MenuItem ID="smAdmCuentasMail" Title="Cuentas de correo" Url="index.php?page=cuenta_mail" Description="Cuentas de correo" IdPag="ctam" />
+		<MenuItem ID="smAdmRestPass" Title="Restablecer contraseña" Url="index.php?page=restpass" Description="Restablecer contraseña de usuario" IdPag="rpas" />
+	</MenuItem>
+	<MenuItem ID="smSalir" Title="Salir" Url="index.php?page=Usuarios.Login&amp;action=Salir" />
+</Menu>
