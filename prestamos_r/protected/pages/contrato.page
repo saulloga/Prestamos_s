@@ -3,6 +3,32 @@
 	<com:TClientScript ID="cscr" ScriptUrl="../compartidos/js/comun.js" />
 	<com:TStyleSheet ID="stylshtgrid" StyleSheetUrl="../compartidos/css/grids.css" />
 	<com:TStyleSheet ID="stylshtest" StyleSheetUrl="../compartidos/css/estilos.css" />
+	<com:TClientScript ID="cscrPrompt">
+			
+	function abrirVentana(url) 
+	{
+    window.open(url, "nuevo", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no, width=750, height=900");
+	}
+	function busca(event, sufijo)
+		{
+			num = event.keyCode;
+
+			if(num == 114)
+			{
+				event.preventDefault();
+				abrir(sufijo);
+			}
+			else if(num != 9 && num != 13)
+			{
+				limpia_campos(sufijo);
+			}
+		}
+	function abrir(idContrato)
+		{
+			open('reportes/contrato.php?id=idContrato', '_blank');
+		}
+			
+	</com:TClientScript>
 </com:TContent>
 <com:TContent ID="Main">
 	<!--Datos del solicitante-->
@@ -20,8 +46,13 @@
 				<table border="0">
 					<tr>
 						<td>Buscar Titular/Solicitud:</td>
-						<td><com:TTextBox ID="txtFoliosolicitud" BackColor="yellow"/></td>
-						<td><com:TButton ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_onclick" Attributes.onclick="window.onbeforeunload=''" IsDefaultButton="true" Visible="true"/></td>
+						<td><com:TTextBox ID="txtFoliosolicitud" BackColor="yellow" />
+							
+							<com:TRequiredFieldValidator
+							ValidationGroup="Guardar1"
+							ControlToValidate="txtFoliosolicitud"
+							Text="Campo requerido" /></td>
+						<td><com:TButton ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_onclick" Attributes.onclick="window.onbeforeunload=''" IsDefaultButton="true" Visible="true" ValidationGroup="Guardar1" /></td>
 					</tr>
 					<tr>
 						<td>Titular:</td>
@@ -199,7 +230,7 @@
 		<!--Botón Guardar-->
 		<tr>
 			<td colspan="2" align="center">
-				<com:TButton ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" IsDefaultButton="true" />
+				<com:TButton ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" IsDefaultButton="true" ValidationGroup="Guardar1" />
 			</td>
 		</tr>
 	</table>

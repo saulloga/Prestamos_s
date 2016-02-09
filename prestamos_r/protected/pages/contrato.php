@@ -11,6 +11,7 @@ include_once('../compartidos/clases/conexion.php');
 class contrato extends TPage
 {
 	var $dbConexion;
+	
 
 	public function onLoad($param)
 	{
@@ -25,12 +26,22 @@ class contrato extends TPage
 		}
 	
 	}
+	
+		public function btnPrueba_onclick($sender,$param)
+	{
+			//$titular=$this->txtFoliosolicitud->Text;
+			$contratos=$this->txtFoliosolicitudd->Text;
+				//$this->ClientScript->RegisterBeginScript("Mensaje","alert('Se guardo correctamente');window.open('http://www.yahoo.com');"); 
+			$this->ClientScript->RegisterBeginScript("Mensaje","alert('Se guardo correctamente');" .
+				//"document.location.target='_blank'; ".
+		  		"open('reportes/contrato.php?id=$contratos', '_blank');");
+	}
 	public function btnBuscar_onclick($sender,$param)
 	{
 		
 				
 		$folio=$this->txtFoliosolicitud->Text;
-		$this->carga_solicitud($folio);	//8242
+		$this->carga_solicitud($folio);	
 	}
 	public function carga_solicitud($id_solicitud)
 	{
@@ -48,41 +59,29 @@ class contrato extends TPage
 			LEFT JOIN sujetos AS a2 ON a2.numero = s.aval2
 			LEFT JOIN catsindicatos sa2 ON sa2.cve_sindicato = s.cve_sind_Aval2
 			WHERE s.id_solicitud = (SELECT MAX(id_solicitud) AS id_solicitud FROM Solicitud WHERE titular = :id_solicitud OR id_solicitud = :id_solicitud)";
-			//WHERE s.id_solicitud = :id_solicitud or t.numero = :id_solicitud 
+			
 			
 		$comando = $this->dbConexion->createCommand($consulta); 
 		$comando->bindValue(":id_solicitud",$id_solicitud);
 		$result = $comando->query()->readAll();
 		if(count($result) > 0)
-		{
-			/*if($this->Radio1->Checked){
-            $this->txtBuscarTitular->Text = $id_solicitud;
-			$this->txtFoliosolicitud->Text =$result[0]["solicitudes"];
-			}
-			if($this->Radio2->Checked){
-            $this->txtBuscarTitular->Text = $result[0]["num_tit"];
-			$this->txtFoliosolicitud->Text =$id_solicitud;
-			}	*/	
+		{	
 			$this->txtBuscarTitularr->Text = $result[0]["num_tit"];
-			$this->txtFoliosolicitudd->Text =$id_solicitud;
+			$this->txtFoliosolicitudd->Text =$result[0]["solicitudes"];
 			$this->txtFechaAutorizasioon->Text = $result[0]["creada"];
-			
 			$this->txtNoUnicoTit->Text = $result[0]["num_tit"];
 			$this->txtAntiguedadTit->Text = $result[0]["tit_ant"];
 			$this->txtNombreTit->Text = $result[0]["titular"];
 			$this->txtSindicatoTit->Text = $result[0]["tit_sind"];
-			
 			$this->txtNoUnicoAval1->Text = $result[0]["aval1"];
 			$this->txtAntiguedadAval1->Text = $result[0]["aval1_ant"];
 			$this->txtNombreAval1->Text = $result[0]["aval1_n"];
 			$this->txtSindicatoAval1->Text = $result[0]["aval1_sind"];
-			
 			$this->txtNoUnicoAval2->Text = $result[0]["aval2"];
 			$this->txtAntiguedadAval2->Text = $result[0]["num_tit"];
 			$this->txtNombreAval2->Text = $result[0]["aval2_n"];
 			$this->txtSindicatoAval2->Text = $result[0]["aval2_sind"];
-			
-			$this->txtFechaFirmaAvales2->Text = $result[0]["firma"];//
+			$this->txtFechaFirmaAvales2->Text = $result[0]["firma"];
 			$this->txtImporte->Text = $result[0]["importe"];
 			$this->txtPlazo->Text = $result[0]["plazo"];
 			$this->txtTasa->Text = $result[0]["tasa"];
@@ -98,7 +97,7 @@ class contrato extends TPage
 			
 		}
 	}
-	public function btnGuardar_Click($sender, $param) //txtFoliosolicitud txtFechaContrato
+	public function btnGuardar_Click($sender, $param) 
 	{
 		$consulta="insert into contrato (id_solicitud,creado,entrega_cheque,num_cheque, observacion, estatus, id_usuario, entrega_real, autorizado, congelado, seguro )"
 				  ." values (:txtFoliosolicitud,:txtFechaAutorizasioon,:txtFechaEntrgaCheque,:txtNumeroDeCheque,:observacion,:estatus,:id_usuario,:txtfecha,:txtFechaContrato,:congelado, :seguro)";
@@ -116,6 +115,10 @@ class contrato extends TPage
 		$comando->bindValue(":congelado",0);
 		$comando->bindValue(":seguro",0);
 		$comando->execute();
+		
+		$contratos=$this->txtFoliosolicitudd->Text;
+			$this->ClientScript->RegisterBeginScript("Mensaje","alert('Se guardo correctamente');" .
+		  		"open('reportes/contrato.php?id=$contratos', '_blank');");
 	}
 }
 
