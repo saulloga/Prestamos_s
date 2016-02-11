@@ -28,7 +28,7 @@ while($rows=mysql_fetch_array($consultar))
 	$VarNombreTitular=$rows['titular'];
 	$VarAntiguedadTit=$rows['antiguedad'];
 	$SindicatoTit=$rows['tit_sind'];
-	$VarImporte=$rows['importe'];	
+	$Importe=$rows['importe'];	
 	$Varaval1=$rows['aval1'];
 	$Varaval2=$rows['aval2'];
 	$VarnombreAval1=$rows['aval1_n'];
@@ -38,15 +38,23 @@ while($rows=mysql_fetch_array($consultar))
 	$VarsindicatoAval1=$rows['aval1_sind'];
 	$VarsindicatoAval2=$rows['aval2_sind'];
 	
-	$importe=$rows['importe'];
-	$intereses=$rows["importe"] * $rows["plazo"] * $rows["tasa"] / 100;
+	$import=$rows['importe'];
+	$inter=$rows["importe"] * $rows["plazo"] * $rows["tasa"] / 100;
 	
-	$Varsubtotal = $importe - $intereses;
+	$Varsubtotals = $import - $inter;
 	$Varsaldoanterior = 0;
 	$VarImportecheque = 0;
 	$quincena = $rows["plazo"] * 2;
-	$VardescQuincena = 	$importe / $quincena;
+	$VardescQuincenas = 	$import / $quincena; 
 }
+$VarImporte = number_format($Importe,2);
+$importe = number_format($import,2);
+$intereses = number_format($inter,2);
+$VardescQuincena = number_format($VardescQuincenas,2);
+$Varsubtotal = number_format($Varsubtotals,2);
+//$importe = number_format($importe,2);
+//$importe = number_format($importe,2);
+
 $hoy = date("Y"); 
 $consultaDirec=mysql_query("SELECT Nombre_completo FROM cat_director WHERE anio = $hoy");
 while($rows=mysql_fetch_array($consultaDirec))
@@ -245,19 +253,7 @@ class MYPDF extends TCPDF {
         $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 }
-//--------------------------------------------------------------
-//$pdf = new CUSTOMPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
-//Add a custom size  
-/*$width = 175;  
-$height = 266; 
-$orientation = ($height>$width) ? 'P' : 'L';  
-$pdf->addFormat("custom", $width, $height);  
-$pdf->reFormat("custom", $orientation); */
 
-//-------------------------------------------------------------
-
-//$dimensiones=array (215.9,355.6);
-//$dimensiones=array (175,216);
 // create new PDF document
 //$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, $dimensiones, true, 'UTF-8', false);
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -288,7 +284,7 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------- datos de la ubicacion-----------------------------------http://www.tcpdf.org/examples/example_048.phps
 
 // set font
-$pdf->SetFont("dejavusans", "", 10.5);
+$pdf->SetFont("dejavusans", "", 10);
 // add a page
 $pdf->AddPage();
 
@@ -296,7 +292,7 @@ $pdf->AddPage();
 $tb0 = <<<EOD
 <table width="665" border="0">
   <tr>
-    <td width="659"><div align="justify">CONTRATO DE PRESTAMO A CORTO PLAZO QUE CELEBRAN POR UNA PARTE EL C. $VarTitular - $VarNombreTitular Y POR OTRA PARTE LA DIRECCION DE PENSIONES DEL MUNICIPIO DE OAXACA DE JUAREZ, REPRESENTADA POR LA C. $VarDirector EN SU CARACTER DE DIRECTORA GENERAL EL CUAL SE SUJETA AL TENOR DE LAS SIGUIENTES</div></td>
+    <td width="659"><div align="justify">CONTRATO DE PRESTAMO A CORTO PLAZO QUE CELEBRAN POR UNA PARTE EL C. NUMERO UNICO ($VarTitular)- $VarNombreTitular Y POR OTRA PARTE LA DIRECCION DE PENSIONES DEL MUNICIPIO DE OAXACA DE JUAREZ, REPRESENTADA POR LA C. $VarDirector EN SU CARACTER DE DIRECTORA GENERAL EL CUAL SE SUJETA AL TENOR DE LAS SIGUIENTES</div></td>
   </tr>
   <tr>
     <td><div align="right">Contrato No. $VarContrato</div></td>
@@ -308,7 +304,7 @@ $tb0 = <<<EOD
     <td><div align="center"></div></td>
   </tr>
   <tr>
-    <td><p align="justify">I. EL C. $VarNombreTitular ,antigüedad  $VarAntiguedadTit , agremiado al sindicato $SindicatoTit quien presta sus servicios en la {5dependencia} solicita a la Dirección de Pensiones del Municipio de Oaxaca de Juárez, Oax. se le conceda un préstamo por la cantidad de $ $VarImporte ( $VarIimporteLetra )</p>    </td>
+    <td><p align="justify">I. EL C. $VarNombreTitular ,antigüedad  $VarAntiguedadTit , agremiado al sindicato $SindicatoTit solicita a la Dirección de Pensiones del Municipio de Oaxaca de Juárez, Oax. se le conceda un préstamo por la cantidad de $ $VarImporte ( $VarIimporteLetra )</p>    </td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -332,13 +328,13 @@ $tb0 = <<<EOD
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>SEGUNDA.- El C. $VarNombreTitular se compromete exprésamente a devolver la cantidad prestada en un periodo de $quincena quincenas.</td>
+    <td>SEGUNDA.- El C. $VarNombreTitular se compromete exprésamente a devolver la cantidad prestada en un periodo de $quincena quincenas y/ó semanas.</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td><div align="justify">TERCERA.- El C. $VarNombreTitular faculta a la Dirección de Pensiones del Municipio de Oaxaca de Juárez, Oax., para que a través de la Tesorería Municipal, le sea descontada en forma quincenal la cantidad de $ $VardescQuincena ($VarIimporteQuincenaLetra) a través de la {Varur}.</div></td>
+    <td><div align="justify">TERCERA.- El C. $VarNombreTitular faculta a la Dirección de Pensiones del Municipio de Oaxaca de Juárez, Oax., para que a través de la Secretaria de Finanzas y Administración, le sea descontada en forma quincenal y/o semanal la cantidad de $ $VardescQuincena ($VarIimporteQuincenaLetra).</div></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -364,10 +360,15 @@ $tb0 = <<<EOD
   <tr>
     <td><div align="justify">SEPTIMA.- Si por cualquier razón imputable a la Dirección de Pensiones, no se realizara el descuento correspondiente a este préstamo, me comprometo informar inmediatamente a la Dirección de Pensiones para que se efectúe de conformidad con lo estipulado en este contrato.</div></td>
   </tr>
+  <tr>
+    <td><div align="justify"> OCTAVA.- Este pagaré si no fuera pagado a su vencimiento causará INTERESES a razón 1.00% MENSUAL por todo el tiempo que dure
+insoluto y está sujeto a COBRO ANTICIPADO del saldo al no ser con PUNTUALIDAD cualquier abono especifico en las CONDICIONES DEL CONTRATO.</div></td>
+  </tr>
 </table>
 EOD;
 $pdf->writeHTML($tb0, true, false, false, false, '');
 //-------------------------------------------------------------------------------------------------------------------------
+$pdf->SetFont("dejavusans", "", 9);
 $tb1 = <<<EOD
 <table width="765" border="0" align="center">
   <tr>
@@ -388,8 +389,8 @@ $tb1 = <<<EOD
   </tr>
   <tr>
   <td width="48">&nbsp;</td>
-    <td colspan="2"> <div align="left">$VarnombreAval1 </div></td>
-    <td colspan="2"> <div align="left">$VarnombreAval2 </div></td>
+    <td colspan="2"> <div align="left">$Varaval1 - $VarnombreAval1 </div></td>
+    <td colspan="2"> <div align="left">$Varaval2 - $VarnombreAval2 </div></td>
     <td width="82">&nbsp;</td>
   </tr>
   <tr>
@@ -405,97 +406,62 @@ $tb1 = <<<EOD
     <td width="82">&nbsp;</td>
   </tr>
   <tr>
-  <td width="48">&nbsp;</td>
-    <td colspan="2"><div align="left">VardependeciaAval1</div></td>
-    <td colspan="2"><div align="left">VardependeciaAval2</div></td>
-    <td width="82">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><div align="left">$VarsindicatoAval1</div></td>
+    <td colspan="2"><div align="left">$VarsindicatoAval2</div></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><div align="left">-----------------------------------------------------</div></td>
+    <td colspan="2"><div align="left">-----------------------------------------------------</div></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><div align="left"><span class="Estilo1">Sindicato al que pertenece</span></div></td>
+    <td colspan="2"><div align="left"><span class="Estilo1">Sindicato al que pertenece</span></div></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><div align="left">-----------------------------------------------------</div></td>
+    <td colspan="2"><div align="left">-----------------------------------------------------</div></td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
   <td width="48">&nbsp;</td>
-    <td colspan="2"><div align="left">-----------------------------------------------------</div></td>
-    <td colspan="2"><div align="left">-----------------------------------------------------</div></td>
-    <td width="82">&nbsp;</td>
-  </tr>
-  <tr>
-  <td width="48">&nbsp;</td>
-    <td colspan="2"><div align="left"><span class="Estilo1">Dependencia donde presta servicios</span></div></td>
-    <td colspan="2"><div align="left"><span class="Estilo1">Dependencia donde presta servicios</span></div></td>
+    <td colspan="2"><div align="left">Firma del Aval</div></td>
+    <td colspan="2"><div align="left">Firma del Aval</div></td>
     <td width="82">&nbsp;</td>
   </tr>
 </table>
 
 EOD;
 $pdf->writeHTML($tb1, true, false, false, false, '');
+
 //---------------------------------------------------------------------------------------------------------
-$tb4 = <<<EOD
-<table width="758" border="0" align="center" >
-  <tr>
-    <td width="49"><div align="left"></div></td>
-    <td width="104"><div align="left">$Varaval1</div></td>
-    <td width="196"><div align="left">$VarAntiAval1  años</div></td>
-    <td width="89"><div align="left">$Varaval2</div></td>
-    <td width="215"><div align="left">$VarAntiAval2  años</div></td>
-    <td width="79"><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td><div align="left">-------------------</div></td>
-    <td><div align="left">-------------------------------</div></td>
-    <td><div align="left">------------------</div></td>
-    <td><div align="left">-------------------------------</div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td><div align="left"><span class="Estilo1">Numero ùnico </span></div></td>
-    <td><div align="left"><span class="Estilo1">Antiguedad en el servicio</span></div></td>
-    <td><div align="left"><span class="Estilo1">Numero ùnico </span></div></td>
-    <td><div align="left"><span class="Estilo1">Antiguedad en el servicio</span></div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td colspan="2"><div align="left">$VarsindicatoAval1</div></td>
-    <td colspan="2"><div align="left">$VarsindicatoAval2</div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td colspan="2"><div align="left">-----------------------------------------</div></td>
-    <td colspan="2"><div align="left">-----------------------------------------</div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td colspan="2"><div align="left"><span class="Estilo1">Sindicato al que pertenece</span></div></td>
-    <td colspan="2"><div align="left"><span class="Estilo1">Sindicato al que pertenece</span></div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td><div align="left"></div></td>
-    <td><div align="left"></div></td>
-    <td><div align="left"></div></td>
-    <td><div align="left"></div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td colspan="2"><div align="left">_______________________________</div></td>
-    <td colspan="2"><div align="left">_______________________________</div></td>
-    <td><div align="left"></div></td>
-  </tr>
-  <tr>
-    <td><div align="left"></div></td>
-    <td colspan="2"><div align="left">Firma del Aval</div></td>
-    <td colspan="2"><div align="left">Firma del Aval</div></td>
-    <td><div align="left"></div></td>
-  </tr>
-</table>
-EOD;
-$pdf->writeHTML($tb4, true, false, false, false, '');
-//---------------------------------------------------------------------------------------------------------
+$pdf->SetFont("dejavusans", "", 10);
 $tb2 = <<<EOD
+
 <table width="677" border="0" align="center">
     <tr>
       <td>&nbsp;</td>
@@ -506,37 +472,37 @@ $tb2 = <<<EOD
     <tr>
       <td width="158">&nbsp;</td>
       <td width="158"><div align="left">Importe del préstamo</div></td>
-      <td width="168"><div align="left">$ $importe</div></td>
+      <td width="168"><div align="right">$ $importe</div></td>
       <td width="175">&nbsp;</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td><div align="left">Intereses</div></td>
-      <td><div align="left">$ $intereses</div></td>
+      <td><div align="right">$ $intereses</div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td><div align="left">Subtotal</div></td>
-      <td><div align="left">$ $Varsubtotal</div></td>
+      <td><div align="right">$ $Varsubtotal</div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td><div align="left">Saldo Préstamo Anterior</div></td>
-      <td><div align="left">$ $Varsaldoanterior</div></td>
+      <td><div align="right">$ $Varsaldoanterior</div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td><div align="left">Importe del cheque</div></td>
-      <td><div align="left">$ $VarImportecheque</div></td>
+      <td><div align="right">$ $VarImportecheque</div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td><div align="left">Descuento Quincenal</div></td>
-      <td><div align="left">$ $VardescQuincena</div></td>
+      <td><div align="right">$ $VardescQuincena</div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>

@@ -1,5 +1,4 @@
 <?php
-
 include("conexion/conexion.php");
 require_once('tcpdf/tcpdf.php');
 $idSolicitud = $_REQUEST['id'];
@@ -51,7 +50,6 @@ while($rows=mysql_fetch_array($consultaDirec))
 	$VarDirector=$rows['Nombre_completo'];
 }
 
-
 $fecha = date('Y/m/j');
 $i = strtotime($fecha);
 $dia = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 ); 
@@ -63,8 +61,6 @@ if ($dia >= 4 ){
 	$nuevafecha = date ( 'j/m/Y' , $nuevafecha );
 }
 
-
-$hoy = date("Y-m-d H:i:s");  
 $VarIimporteLetra = numtoletras($VarImporte);
 
 function numtoletras($xcifra) // convertir numero a letras
@@ -278,7 +274,7 @@ $pdf->SetFont("dejavusans", "", 12);
 // add a page
 $pdf->AddPage();
 
-$html = <<<EOD
+$html =<<<EOD
 <p align="center"><strong>DIRECCION DE PENSIONES.</strong><br />
     <strong>DEL MUNICIPIO DE OAXACA DE JUÁREZ OAX..</strong><br />
     <strong>SOLICITUD DE PRESTAMO</strong></p>
@@ -287,7 +283,7 @@ $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 //-------------------------------------------------------------------------------------------------------------------------
 $pdf->SetFont("dejavusans", "", 10);
 $tb0 = <<<EOD
-<table width="637" border="0">
+<table width="731" border="0">
   <tr>
     <td width="270">&nbsp;</td>
     <td width="106">&nbsp;</td>
@@ -300,9 +296,6 @@ EOD;
 $pdf->writeHTML($tb0, true, false, false, false, '');
 //-------------------------------------------------------------------------------------------------------------------------border="0"
 $tb2 = <<<EOD
-<table width="644" border="1"  align="center" >
-  <tr>
-    <td>
 <table width="686"  align="center" border="0">
   <tr>
     <td colspan="4"><div align="left"></div></td>
@@ -313,12 +306,12 @@ $tb2 = <<<EOD
   </tr>
   <tr>
     <td><div align="left">  Fecha de Ingreso:</div></td>
-    <td width="141"><div align="left"><span class="Estilo3">$VarFechadeIngreso</span></div></td>
+    <td width="141"><div align="left"><span class="Estilo3"> $VarFechadeIngreso </span></div></td>
     <td width="103"><p align="center">Antigüedad: </p>    </td>
     <td width="253"><div align="left"><span class="Estilo3">$VarAntiguedad ($AntLetra)</span></div></td>
   </tr>
   <tr>
-    <td><div align="left"></div></td>
+    <td><div align="left"> </div></td>
     <td><div align="left"></div></td>
     <td><div align="right"></div></td>
     <td><div align="left"></div></td>
@@ -330,7 +323,7 @@ $tb2 = <<<EOD
     <td><div align="left"></div></td>
   </tr>
   <tr>
-    <td colspan="4"> <div align="left">  ___________________________________________________________________________________  </div></td>
+    <td colspan="4"> <div align="left">  ____________________________________________________________________________________________________  </div></td>
   </tr>
   <tr>
     <td><div align="left"> Aval:</div></td>
@@ -351,7 +344,7 @@ $tb2 = <<<EOD
   </tr>
   <tr>
     <td colspan="2"><div align="left"> Fecha de firma de los Avales: $nuevafecha </div></td>
-    <td colspan="2"><div align="left"></div></td>
+    <td colspan="2"><div align="left"> </div></td>
   </tr>
   <tr>
     <td><div align="left"></div></td>
@@ -366,27 +359,34 @@ $tb2 = <<<EOD
     <td><div align="left">$ $VarImporte</div></td>
   </tr>
   <tr>
-    <td colspan="4"><div align="left">  ___________________________________________________________________________________  </div></td>
-  </tr>
-</table>
-<table width="654" border="0" align="center">
-  <tr>
-    <td width="644"><div align="center">DIRECTORA DE PENSIONES</div></td>
-  </tr>
-  <tr>
-    <td><p>&nbsp;</p>
-    <p align="center">________________________________________________________________</p>
-    </td>
-  </tr>
-  <tr>
-    <td><div align="center">$VarDirector</div></td>
-  </tr>
-</table>
-</td>
+    <td colspan="4"><div align="left">  ____________________________________________________________________________________________________  </div></td>
   </tr>
 </table>
 EOD;
 $pdf->writeHTML($tb2, true, false, false, false, '');
+$pdf->SetFont("dejavusans", "", 9);
+$tb02 = <<<EOD
+  <table width="682" border="0" align="CENTER">
+    <tr>
+      <td width="336"><div align="center">REPRESENTANTE SINDICAL</div></td>
+      <td width="336"><div align="center">DIRECTORA DE PENSIONES</div></td>
+    </tr>
+    <tr>
+      <td><p align="left">&nbsp;</p>
+      <p align="CENTER">____________________________________________________</p></td>
+      <td><p align="CENTER">&nbsp;</p>
+      <p align="left">____________________________________________________</p></td>
+    </tr>
+    <tr>
+      <td><div align="center">$VarRepreSindicato</div></td>
+      <td><div align="LEFT">$VarDirector</div></td>
+    </tr>
+  </table>
+EOD;
+$pdf->writeHTML($tb02, true, false, false, false, '');
+
+$pdf->Rect(10,55, 190, 90, 'D');
+$pdf->SetDrawColor(0);
 //---------------------------------------------------------------------------------------------
 $pdf->lastPage();
 // add a page
@@ -561,15 +561,11 @@ $tb12 = <<<EOD
 EOD;
 $pdf->writeHTML($tb12, true, false, false, false, '');
 //ºººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººººº
-$pdf->SetDrawColor(10);
 //                   tamaño
 //          x         x  y
 $pdf->Rect(10, 40, 190, 90, 'D');
 $pdf->SetDrawColor(0);
 
-$pdf->SetDrawColor(10);
-//                   tamaño
-//          x         x  y
 $pdf->Rect(10, 165, 190, 90, 'D');
 $pdf->SetDrawColor(0);
 //$pdf->RoundedRect(5, 255, 40, 30, 3.50, '1111', 'DF');

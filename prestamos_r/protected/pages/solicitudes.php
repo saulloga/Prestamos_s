@@ -36,28 +36,28 @@ class solicitudes extends TPage
 	{
 		$consulta="insert into solicitud (creada,titular,antiguedad,tipo_empleado,cve_sindicato,aval1,antig_aval1,tipo_aval1,cve_sind_aval1,aval2,antig_aval2,tipo_aval2"
 		.", cve_sind_aval2, importe,plazo,tasa,saldo_anterior,id_contrato_ant,descuento,importe_pa_tit, porcentaje_pa_tit,importe_pa_aval1, porcentaje_pa_aval1"
-		.", importe_pa_aval2, porcentaje_pa_aval2, firma ,observacion, firma1,firma2, estatus, id_usuario,  seguro) values " 
+		.", importe_pa_aval2, porcentaje_pa_aval2, firma ,observacion, firma1,firma2, estatus, id_usuario,  seguro, AntLetraTi) values " 
 		."(:txtFecha,:txtTitular,:txtAntiguedadTit,:txtTipoNumTit,:txtSindicatoNumTit,:txtNoUnicoAval1,:txtAntiguedadAval1,:txtTipoAval1,:txtSindicatoNumAval1,:txtNoUnicoAval2,"
 		.":txtAntiguedadAval2,:txtTipoAval2,:txtSindicatoNumAval2,:txtImporte,:txtPlazo,:txtTasa,:txtSaldoAnterior,:msg18,:txtDescuentos,:msg20,:msg21,:msg22,:msg23,:msg24"
-		.",:msg25,:datFechaFirmaAvales,:msg27,:txtNombreAval1,:txtNombreAval2,:msg30,:msg31,:msg32)";
+		.",:msg25,:datFechaFirmaAvales,:msg27,:txtNombreAval1,:txtNombreAval2,:msg30,:msg31,:msg32, :txtAntiguedad)";
 
 		$comando = $this->dbConexion->createCommand($consulta);
 		$comando->bindValue(":txtFecha",$this->txtFecha->Text);
-		$comando->bindValue(":txtTitular",$this->txtTitular->Text);
-		$comando->bindValue(":txtAntiguedadTit",$this->txtAntiguedadTit->Text);
+		$comando->bindValue(":txtTitular",$this->txtNoUnicoTit->Text);
+		$comando->bindValue(":txtAntiguedadTit",$this->txtAntiguedadNumTit->Text);
 		$comando->bindValue(":txtTipoNumTit",$this->txtTipoNumTit->Text);
 		$comando->bindValue(":txtSindicatoNumTit",$this->txtSindicatoNumTit->Text);
 		$comando->bindValue(":txtNoUnicoAval1",$this->txtNoUnicoAval1->Text);
-		$comando->bindValue(":txtAntiguedadAval1",$this->txtAntiguedadAval1->Text);
+		$comando->bindValue(":txtAntiguedadAval1",$this->txtAntiguedadNumAval1->Text);
 		$comando->bindValue(":txtTipoAval1",$this->txtTipoAval1->Text);	
 		$comando->bindValue(":txtSindicatoNumAval1",$this->txtSindicatoNumAval1->Text);
 		$comando->bindValue(":txtNoUnicoAval2",$this->txtNoUnicoAval2->Text);
-		$comando->bindValue(":txtAntiguedadAval2",$this->txtAntiguedadAval2->Text);
+		$comando->bindValue(":txtAntiguedadAval2",$this->txtAntiguedadNumAval2->Text);
 		$comando->bindValue(":txtTipoAval2",$this->txtTipoAval2->Text);
 		$comando->bindValue(":txtSindicatoNumAval2",$this->txtSindicatoNumAval2->Text);
 		$comando->bindValue(":txtImporte",$this->txtImporte->Text);
 		$comando->bindValue(":txtPlazo",$this->txtPlazo->Text);
-		$comando->bindValue(":txtTasa",$this->txtTasa->Text);
+		$comando->bindValue(":txtTasa",1.00);//$this->txtTasa->Text);
 		$comando->bindValue(":txtSaldoAnterior",$this->txtSaldoAnterior->Text);
 		$comando->bindValue(":msg18",0);
 		$comando->bindValue(":txtDescuentos",$this->txtDescuentos->Text);
@@ -74,12 +74,18 @@ class solicitudes extends TPage
 		$comando->bindValue(":msg30","A");
 		$comando->bindValue(":msg31",4);
 		$comando->bindValue(":msg32",0);
+		$comando->bindValue(":txtAntiguedad",$this->txtAntiguedadTit->Text);
 		$comando->execute();
 		
-		$titular=$this->txtNoUnicoTit->Text;
-		$this->ClientScript->RegisterBeginScript("Mensaje","alert('Se guardo correctamente');" .
-				"document.location.target='_blank'; ".
-		  		"document.location.href='reportes/solicitudess.php?id=$titular ';"); 
+		if($this->txtSindicatoNumTit->Text > 0){
+			$titular=$this->txtNoUnicoTit->Text;
+			$this->ClientScript->RegisterBeginScript("Mensaje","alert('Se guardo correctamente');" .
+					"open('reportes/solicitudesSindicato.php?id=$titular', '_blank');");
+				}else {
+			$titular=$this->txtNoUnicoTit->Text;
+			$this->ClientScript->RegisterBeginScript("Mensaje","alert('Se guardo correctamente');" .
+					"open('reportes/solicitudess.php?id=$titular', '_blank');");
+		}
 	}
 	
 	public function btnBuscar_onclick($sender,$param)
@@ -106,15 +112,15 @@ class solicitudes extends TPage
 		$comando->bindValue(":id_solicitud",$this ->txtFolio->text);
 		$comando->bindValue(":txtFecha",$this->txtFecha->Text);
 		$comando->bindValue(":txtTitular",$this->txtTitular->Text);
-		$comando->bindValue(":txtAntiguedadTit",$this->txtAntiguedadTit->Text);
+		$comando->bindValue(":txtAntiguedadTit",$this->txtAntiguedadNumTit->Text);
 		$comando->bindValue(":txtTipoNumTit",$this->txtTipoNumTit->Text);
 		$comando->bindValue(":txtSindicatoNumTit",$this->txtSindicatoNumTit->Text);
 		$comando->bindValue(":txtNoUnicoAval1",$this->txtNoUnicoAval1->Text);
-		$comando->bindValue(":txtAntiguedadAval1",$this->txtAntiguedadAval1->Text);
+		$comando->bindValue(":txtAntiguedadAval1",$this->txtAntiguedadNumAval1->Text);
 		$comando->bindValue(":txtTipoAval1",$this->txtTipoAval1->Text);	
 		$comando->bindValue(":txtSindicatoNumAval1",$this->txtSindicatoNumAval1->Text);
 		$comando->bindValue(":txtNoUnicoAval2",$this->txtNoUnicoAval2->Text);
-		$comando->bindValue(":txtAntiguedadAval2",$this->txtAntiguedadAval2->Text);
+		$comando->bindValue(":txtAntiguedadAval2",$this->txtAntiguedadNumAval2->Text);
 		$comando->bindValue(":txtTipoAval2",$this->txtTipoAval2->Text);
 		$comando->bindValue(":txtSindicatoNumAval2",$this->txtSindicatoNumAval2->Text);
 		$comando->bindValue(":txtImporte",$this->txtImporte->Text);
@@ -154,17 +160,26 @@ class solicitudes extends TPage
 		if(count($result) > 0)
 		{
 			$intervalo = date_diff(date_create($result[0]["fec_ingre"]), new DateTime("now"));
-			$formato = '%m meses';
-			if($intervalo->format('%y') > 100)
+			$formatoD = '%d dias';
+			$formatoM = '%m meses';
+			$formatoMD = '%d'; 
+			$formatoMN = '%m'; 
+			
+			if($intervalo->format('%y') > 100){
 				$formato = 'Desconocida';
-			elseif($intervalo->format('%y') > 0)
-				$formato = '%y años ' . $formato;
+				}
+			elseif($intervalo->format('%y') > 0){
+				$formato = '%y años ' . $formatoM ." ".$formatoD;
+				$formatoANIO = '%y'; 
+				$formatoDIA = $formatoMN;
+				$formatoMES = $formatoMD;
+				}
 			$ant = "txtAntiguedad" . $sufijo;
 			$this->$ant->Text = $intervalo->format($formato);
-			
+			$antSUM = "txtAntiguedadNum" . $sufijo;
+			$this->$antSUM->Text = $intervalo->format($formatoANIO).".".($intervalo->format($formatoDIA)+ $intervalo->format($formatoMES)); 	
 			$nom = "txtNombre" . $sufijo;
 			$this->$nom->Text = $result[0]["nombre"];
-			
 			$nomNum = "txtSindicatoNum" . $sufijo;
 			$this->$nomNum->Text = $result[0]["sindicato"];
 			

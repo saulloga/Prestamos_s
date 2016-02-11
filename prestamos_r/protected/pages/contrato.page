@@ -89,16 +89,6 @@
 										<td colspan="3"><com:TTextBox ID="txtNombreTit" Width="400px" /></td>
 									</tr>
 									<tr>
-										<td>Dirección</td>
-										<td colspan="4"><com:TTextBox ID="txtDireccion" Width="400px" /></td>
-									</tr>
-									<tr>
-										<td>Categoria</td>
-										<td colspan="2"><com:TTextBox ID="txtCategoriaTit" /></td>
-										<td>Unidad Presupuestal</td>
-										<td><com:TTextBox ID="txtUnidadPresupuestal" Width="400px" /></td>
-									</tr>
-									<tr>
 										<td>Sindicato</td>
 										<td colspan="2"><com:TTextBox ID="txtSindicatoTit" /></td>
 										<td>Antigüedad</td>
@@ -118,16 +108,6 @@
 										<td colspan="3"><com:TTextBox ID="txtNombreAval1" Width="400px" /></td>
 									</tr>
 									<tr>
-										<td>Dirección</td>
-										<td colspan="4"><com:TTextBox ID="txtDireccion2" Width="400px" /></td>
-									</tr>
-									<tr>
-										<td>Categoria</td>
-										<td colspan="2"><com:TTextBox ID="txtCategoriaAval1" /></td>
-										<td>Unidad Presupuestal</td>
-										<td><com:TTextBox ID="txtUnidadPresupuestal2" Width="400px" /></td>
-									</tr>
-									<tr>
 										<td>Sindicato</td>
 										<td colspan="2"><com:TTextBox ID="txtSindicatoAval1" /></td>
 										<td>Antigüedad</td>
@@ -145,16 +125,6 @@
 										<td>No. Único</td>
 										<td><com:TTextBox ID="txtNoUnicoAval2" Width="80px" /></td>
 										<td colspan="3"><com:TTextBox ID="txtNombreAval2" Width="400px" /></td>
-									</tr>
-									<tr>
-										<td>Dirección</td>
-										<td colspan="4"><com:TTextBox ID="txtDireccion3" Width="400px" /></td>
-									</tr>
-									<tr>
-										<td>Categoria</td>
-										<td colspan="2"><com:TTextBox ID="txtCategoriaAval2" /></td>
-										<td>Unidad Presupuestal</td>
-										<td><com:TTextBox ID="txtUnidadPresupuestal3" Width="400px" /></td>
 									</tr>
 									<tr>
 										<td>Sindicato</td>
